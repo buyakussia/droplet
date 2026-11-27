@@ -24,10 +24,11 @@ export class ShelfWidget {
         this._ctx = ctx;
         this._settings = ctx.settings;
         this._ignoreUntil = 0;
+        this.lockSafe = false;
         this.compactLeading = null;
         this.compactTrailing = null;
 
-        this.card = vbox({style_class: 'droplet-card droplet-shelf'});
+        this.page = vbox({style_class: 'droplet-page-shelf'});
         const head = new St.BoxLayout({style_class: 'droplet-card-head'});
         head.add_child(new St.Icon({icon_name: 'folder-documents-symbolic', style_class: 'droplet-card-icon'}));
         this._title = new St.Label({text: 'Полка', style_class: 'droplet-card-title', x_expand: true, y_align: Clutter.ActorAlign.CENTER});
@@ -38,16 +39,16 @@ export class ShelfWidget {
         this._clear = new St.Button({style_class: 'droplet-chip', label: 'Очистить', can_focus: true});
         this._clear.connect('clicked', () => this._settings.set_strv('shelf-files', []));
         head.add_child(this._clear);
-        this.card.add_child(head);
+        this.page.add_child(head);
 
         this._grid = new St.Widget({
             style_class: 'droplet-shelf-grid',
             layout_manager: new Clutter.FlowLayout({column_spacing: 6, row_spacing: 6, homogeneous: true, max_column_width: 82}),
             x_expand: true,
         });
-        this.card.add_child(this._grid);
-        this._empty = new St.Label({text: 'Скопируйте файлы (Ctrl+C) —\nони появятся здесь', style_class: 'droplet-dim droplet-shelf-empty'});
-        this.card.add_child(this._empty);
+        this.page.add_child(this._grid);
+        this._empty = new St.Label({text: 'Скопируйте файлы (Ctrl+C)\nили перетащите их на каплю', style_class: 'droplet-dim droplet-shelf-empty'});
+        this.page.add_child(this._empty);
 
         this._settings.connectObject('changed::shelf-files', () => this._fill(), this);
         this._selection = global.display.get_selection();
@@ -83,7 +84,14 @@ export class ShelfWidget {
         });
     }
 
-    _add(uris) {
+    /** Файлы, перетащенные на каплю. */
+    addUris(uris) {
+        this._add(uris.filter(u => u.startsWith('file://')), 'Перетащено на полку');
+    }
+
+    _add(uris, how = null) {
+        if (!uris.length)
+            return;
         const limit = Math.max(1, this._settings.get_int('shelf-limit'));
         const rest = this._files().filter(u => !uris.includes(u));
         this._settings.set_strv('shelf-files', [...uris, ...rest].slice(0, limit));
@@ -94,9 +102,10 @@ export class ShelfWidget {
         this._ctx.island.showActivity({
             icon: this._icon(first),
             title: n === 1 ? first.get_basename() : `${n} ${word} на полке`,
-            subtitle: n === 1 ? 'На полке — нажмите, чтобы открыть' : 'Нажмите, чтобы открыть полку',
+            subtitle: how ?? (n === 1 ? 'На полке — нажмите, чтобы открыть' : 'Нажмите, чтобы открыть полку'),
             duration: 2200,
-            onClick: () => this._ctx.island.expand(),
+            private: true,
+            onClick: () => this._ctx.showTab('shelf'),
         });
     }
 
@@ -186,6 +195,7 @@ export class ShelfWidget {
         this._copyAll.visible = has;
         this._clear.visible = has;
         this._title.text = has ? `Полка · ${files.length}` : 'Полка';
+        this._ctx.relayout();
     }
 
     onStateChanged(state) {
@@ -196,6 +206,6 @@ export class ShelfWidget {
     destroy() {
         this._settings.disconnectObject(this);
         this._selection.disconnectObject(this);
-        this.card.destroy();
+        this.page.destroy();
     }
 }

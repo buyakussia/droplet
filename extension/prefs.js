@@ -17,7 +17,7 @@ export default class DropletPreferences extends ExtensionPreferences {
         // ---------------------------------------------------------------- виджеты
         const group = new Adw.PreferencesGroup({
             title: 'Виджеты',
-            description: 'Карточки в раскрытой капле. Порядок — стрелками.',
+            description: 'Вкладки раскрытой капли. Порядок — стрелками.',
         });
         page.add(group);
         let rows = [];
@@ -77,6 +77,20 @@ export default class DropletPreferences extends ExtensionPreferences {
         sw('replace-banners', 'Вместо баннеров GNOME', 'Не дублировать уведомление стандартным всплывающим окном (оно останется в списке уведомлений)');
         sw('media-activity', 'Новый трек', 'Коротко показывать название при смене трека');
         sw('show-battery', 'Батарея', 'Зарядка, полный заряд и низкий заряд');
+        sw('hud', 'Громкость и яркость в капле', 'Тонкая полоска в капле вместо стандартного окошка GNOME');
+
+        const pomo = new Adw.PreferencesGroup({title: 'Таймер Pomodoro'});
+        page.add(pomo);
+        const spin = (key, title, min, max) => {
+            const row = Adw.SpinRow.new_with_range(min, max, 1);
+            row.title = title;
+            settings.bind(key, row, 'value', 0);
+            pomo.add(row);
+        };
+        spin('pomodoro-focus', 'Фокус, минут', 1, 180);
+        spin('pomodoro-break', 'Перерыв, минут', 1, 60);
+        spin('pomodoro-long', 'Длинный перерыв, минут', 1, 90);
+        spin('pomodoro-every', 'Длинный перерыв после фокусов', 2, 10);
 
         const shelf = new Adw.PreferencesGroup({title: 'Полка файлов'});
         page.add(shelf);

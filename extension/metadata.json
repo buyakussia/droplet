@@ -1,10 +1,21 @@
 {
   "uuid": "droplet@buyakussia.github.io",
   "name": "Droplet",
-  "description": "A fluid, Dynamic-Island-style droplet in place of the clock: media controls, audio output switcher, a shelf for copied files, and live notifications — with spring-physics animations.",
-  "shell-version": ["46", "47", "48", "49", "50", "51"],
+  "description": "A fluid, Dynamic-Island-style droplet in place of the clock: media player, audio outputs and per-app volume, file shelf with drag and drop, clipboard, notes, Pomodoro, system stats, calendar and weather — with spring-physics animations.",
+  "shell-version": [
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+    "51"
+  ],
   "settings-schema": "org.gnome.shell.extensions.droplet",
   "gettext-domain": "droplet",
   "url": "https://github.com/buyakussia/droplet",
-  "version-name": "0.1"
+  "version-name": "0.2",
+  "session-modes": [
+    "user",
+    "unlock-dialog"
+  ]
 }

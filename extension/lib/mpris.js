@@ -79,6 +79,7 @@ export class Player {
         this.canNext = unpack(p.get_cached_property('CanGoNext')) ?? false;
         this.canPrev = unpack(p.get_cached_property('CanGoPrevious')) ?? false;
         this.canSeek = unpack(p.get_cached_property('CanSeek')) ?? false;
+        this.shuffle = unpack(p.get_cached_property('Shuffle'));  // null — плеер не поддерживает
         this._onChange(this);
     }
 
@@ -125,6 +126,13 @@ export class Player {
 
     previous() {
         this._call('Previous');
+    }
+
+    setShuffle(on) {
+        this._proxy?.get_connection().call(this.busName, PATH, 'org.freedesktop.DBus.Properties', 'Set',
+            new GLib.Variant('(ssv)', [PLAYER, 'Shuffle', new GLib.Variant('b', on)]),
+            null, Gio.DBusCallFlags.NONE, 1000, null, null);
+        this.shuffle = on;
     }
 
     seekTo(us) {

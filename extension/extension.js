@@ -1,5 +1,9 @@
 // Droplet — «капля» в стиле Dynamic Island на месте часов GNOME.
+// Работает и на экране блокировки (session-modes: unlock-dialog): там видны только
+// безопасные вкладки (плеер, таймер), а уведомления и файлы скрыты.
 
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
@@ -38,6 +42,25 @@ export default class DropletExtension extends Extension {
         addTopChrome(this._island);
         this._registry = new Registry(this._island, this._settings, this);
         this._island.start();
+
+        // только для автоматических тестов: режим экрана блокировки
+        if (Number(GLib.getenv('DROPLET_TEST_LOCK') ?? 0) > 0) {
+            GLib.timeout_add(GLib.PRIORITY_DEFAULT, Number(GLib.getenv('DROPLET_TEST_LOCK')), () => {
+                Main.sessionMode.pushMode('unlock-dialog');
+                return GLib.SOURCE_REMOVE;
+            });
+        }
+        // только для автоматических тестов: вызвать системное окошко громкости
+        if (Number(GLib.getenv('DROPLET_TEST_OSD') ?? 0) > 0) {
+            GLib.timeout_add(GLib.PRIORITY_DEFAULT, Number(GLib.getenv('DROPLET_TEST_OSD')), () => {
+                const icon = Gio.ThemedIcon.new('audio-volume-medium-symbolic');
+                if (Main.osdWindowManager.show.length >= 5 || Main.osdWindowManager.showOne === undefined)
+                    Main.osdWindowManager.show(-1, icon, null, 0.45, 1);
+                else
+                    Main.osdWindowManager.showAll(icon, null, 0.45, 1);
+                return GLib.SOURCE_REMOVE;
+            });
+        }
 
         // часы GNOME прячем, но не убираем: их меню (календарь и уведомления)
         // открывается правым кликом по капле и кнопкой в раскрытой капле

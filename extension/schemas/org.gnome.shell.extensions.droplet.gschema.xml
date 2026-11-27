@@ -2,8 +2,40 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.droplet" path="/org/gnome/shell/extensions/droplet/">
     <key name="widgets" type="as">
-      <default>['media', 'audio', 'shelf']</default>
+      <default>['media', 'calendar', 'audio', 'shelf', 'clipboard', 'notes', 'pomodoro', 'system']</default>
       <summary>Включённые виджеты в порядке показа</summary>
+    </key>
+    <key name="active-tab" type="s">
+      <default>'media'</default>
+      <summary>Последняя открытая вкладка</summary>
+    </key>
+    <key name="hud" type="b">
+      <default>true</default>
+      <summary>Громкость и яркость в капле вместо окошка GNOME</summary>
+    </key>
+    <key name="notes" type="s">
+      <default>''</default>
+      <summary>Текст заметок</summary>
+    </key>
+    <key name="pomodoro-focus" type="i">
+      <range min="1" max="180"/>
+      <default>25</default>
+      <summary>Фокус, минут</summary>
+    </key>
+    <key name="pomodoro-break" type="i">
+      <range min="1" max="60"/>
+      <default>5</default>
+      <summary>Перерыв, минут</summary>
+    </key>
+    <key name="pomodoro-long" type="i">
+      <range min="1" max="90"/>
+      <default>15</default>
+      <summary>Длинный перерыв, минут</summary>
+    </key>
+    <key name="pomodoro-every" type="i">
+      <range min="2" max="10"/>
+      <default>4</default>
+      <summary>Длинный перерыв после стольких фокусов</summary>
     </key>
     <key name="expand-on-hover" type="b">
       <default>false</default>

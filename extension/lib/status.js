@@ -62,6 +62,7 @@ export class StatusWatcher {
             title,
             subtitle: stripMarkup(n.body ?? n.bannerBodyText),
             duration: 3600,
+            private: true,
             onClick: () => {
                 // приложение получает «уведомление нажато» и само открывает нужное окно;
                 // activate() не зовём: у некоторых уведомлений он уничтожает их дважды
