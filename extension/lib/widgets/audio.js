@@ -6,31 +6,9 @@ import GLib from 'gi://GLib';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
 
-import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
-
+import {PillSlider} from '../pill.js';
 import * as Sound from '../sound.js';
 import {vbox} from '../util.js';
-
-function sliderRow(icon, title, holdOpen) {
-    const row = vbox({style_class: 'droplet-mixer-row'});
-    const head = new St.BoxLayout({style_class: 'droplet-mixer-head'});
-    const ic = typeof icon === 'string'
-        ? new St.Icon({icon_name: icon, style_class: 'droplet-mixer-icon'})
-        : new St.Icon({gicon: icon, style_class: 'droplet-mixer-icon'});
-    head.add_child(ic);
-    const label = new St.Label({text: title, x_expand: true, style_class: 'droplet-mixer-name', y_align: Clutter.ActorAlign.CENTER});
-    label.clutter_text.ellipsize = 3;
-    head.add_child(label);
-    const value = new St.Label({style_class: 'droplet-card-value', y_align: Clutter.ActorAlign.CENTER});
-    head.add_child(value);
-    row.add_child(head);
-    const slider = new Slider.Slider(0);
-    slider.add_style_class_name('droplet-slider');
-    slider.connect('drag-begin', () => holdOpen(true));
-    slider.connect('drag-end', () => holdOpen(false));
-    row.add_child(slider);
-    return {row, slider, value, icon: ic};
-}
 
 export class AudioWidget {
     constructor(ctx) {
@@ -53,12 +31,14 @@ export class AudioWidget {
         scroll.set_child(col);
         this.page.add_child(scroll);
 
-        this._master = sliderRow('audio-volume-high-symbolic', 'Громкость', hold);
-        this._master.slider.connect('notify::value', () => {
-            if (!this._syncing)
-                Sound.setStreamFrac(this._stream, this._master.slider.value);
+        this._master = new PillSlider({
+            icon: 'audio-volume-high-symbolic',
+            title: 'Громкость',
+            onChange: v => Sound.setStreamFrac(this._stream, v),
+            onDrag: hold,
         });
-        col.add_child(this._master.row);
+        this._master.actor.add_style_class_name('master');
+        col.add_child(this._master.actor);
 
         col.add_child(new St.Label({text: 'Выход', style_class: 'droplet-section'}));
         this._devices = vbox({style_class: 'droplet-devices'});
@@ -96,11 +76,8 @@ export class AudioWidget {
 
     _sync() {
         const frac = Sound.streamFrac(this._stream);
-        this._syncing = true;
-        this._master.slider.value = Math.min(1, frac);
-        this._syncing = false;
-        this._master.value.text = this._stream ? `${Math.round(frac * 100)}%` : '';
-        this._master.icon.icon_name = Sound.volumeIcon(frac, this._stream?.is_muted);
+        this._master.set(Math.min(1, frac));
+        this._master.setIcon(Sound.volumeIcon(frac, this._stream?.is_muted));
     }
 
     _fillDevices() {
@@ -142,25 +119,16 @@ export class AudioWidget {
         this._apps.clear();
         this._appsBox.destroy_all_children();
         for (const stream of Sound.appStreams()) {
-            const r = sliderRow(this._appIcon(stream), stream.get_name() || stream.get_description() || 'Приложение',
-                on => this._ctx.island.holdOpen(on));
-            r.row.add_style_class_name('app');
-            const sync = () => {
-                const f = Sound.streamFrac(stream);
-                r.syncing = true;
-                r.slider.value = Math.min(1, f);
-                r.syncing = false;
-                r.value.text = `${Math.round(f * 100)}%`;
-            };
-            r.slider.connect('notify::value', () => {
-                if (!r.syncing)
-                    Sound.setStreamFrac(stream, r.slider.value);
-                r.value.text = `${Math.round(r.slider.value * 100)}%`;
+            const pill = new PillSlider({
+                icon: this._appIcon(stream),
+                title: stream.get_name() || stream.get_description() || 'Приложение',
+                value: Math.min(1, Sound.streamFrac(stream)),
+                onChange: v => Sound.setStreamFrac(stream, v),
+                onDrag: on => this._ctx.island.holdOpen(on),
             });
-            stream.connectObject('notify::volume', sync, this);
-            sync();
-            this._appsBox.add_child(r.row);
-            this._apps.set(stream.get_id(), {stream, row: r});
+            stream.connectObject('notify::volume', () => pill.set(Math.min(1, Sound.streamFrac(stream))), this);
+            this._appsBox.add_child(pill.actor);
+            this._apps.set(stream.get_id(), {stream, pill});
         }
         const has = this._apps.size > 0;
         this._appsTitle.visible = true;

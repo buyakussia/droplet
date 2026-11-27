@@ -73,6 +73,14 @@ export class PomodoroWidget {
         const side = vbox({style_class: 'droplet-pomo-side', y_align: Clutter.ActorAlign.CENTER});
         this._dots = new St.BoxLayout({style_class: 'droplet-pomo-dots'});
         side.add_child(this._dots);
+
+        // как в Droppy: пока таймер стоит — выбрать этап и длительность
+        this._setup = vbox({style_class: 'droplet-pomo-setup'});
+        this._phaseChips = new St.BoxLayout({style_class: 'droplet-pomo-chips'});
+        this._minChips = new St.BoxLayout({style_class: 'droplet-pomo-chips'});
+        this._setup.add_child(this._phaseChips);
+        this._setup.add_child(this._minChips);
+        side.add_child(this._setup);
         const buttons = new St.BoxLayout({style_class: 'droplet-pomo-buttons'});
         const mk = (icon, tip, fn, cls = 'droplet-round-button') => {
             const b = new St.Button({style_class: cls, child: new St.Icon({icon_name: icon}), accessible_name: tip, can_focus: true});
@@ -203,8 +211,43 @@ export class PomodoroWidget {
             this._dots.add_child(d);
         }
         this._hint.text = this._running ? '' : 'Нажмите ▶, чтобы начать';
+        this._setup.visible = !this._running;
+        if (!this._running)
+            this._fillSetup();
         this.compactLeading.queue_repaint();
         this._bigRing.queue_repaint();
+    }
+
+    _chip(label, active, fn) {
+        const b = new St.Button({style_class: 'droplet-chip droplet-pomo-chip', label, can_focus: true});
+        if (active)
+            b.add_style_pseudo_class('checked');
+        b.connect('clicked', fn);
+        return b;
+    }
+
+    _fillSetup() {
+        this._phaseChips.destroy_all_children();
+        this._minChips.destroy_all_children();
+        const focus = this._phase === 'focus';
+        this._phaseChips.add_child(this._chip('Фокус', focus, () => this._choosePhase('focus')));
+        this._phaseChips.add_child(this._chip('Перерыв', !focus, () => this._choosePhase('break')));
+        const key = focus ? 'pomodoro-focus' : this._phase === 'long' ? 'pomodoro-long' : 'pomodoro-break';
+        const options = focus ? [15, 25, 45, 60] : this._phase === 'long' ? [10, 15, 20, 30] : [5, 10, 15];
+        const current = this._ctx.settings.get_int(key);
+        for (const m of options) {
+            this._minChips.add_child(this._chip(`${m}`, m === current, () => {
+                this._ctx.settings.set_int(key, m);
+                this._left = m * 60;
+                this._sync();
+            }));
+        }
+    }
+
+    _choosePhase(phase) {
+        this._phase = phase;
+        this._left = this._duration(phase);
+        this._sync();
     }
 
     destroy() {

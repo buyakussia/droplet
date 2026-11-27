@@ -108,13 +108,26 @@
 .droplet-device-icon { icon-size: 16px; }
 .droplet-device-check { icon-size: 14px; color: #ff9f6b; }
 
+/* ползунок-пилюля (как в Droppy) */
+.droplet-pill { border-radius: 14px; background-color: rgba(255,255,255,0.08); min-height: 36px; transition-duration: 150ms; }
+.droplet-pill:hover { background-color: rgba(255,255,255,0.11); }
+.droplet-pill-fill { border-radius: 14px; background-color: rgba(255,255,255,0.2); }
+.droplet-pill:active .droplet-pill-fill { background-color: rgba(255,255,255,0.26); }
+.droplet-pill.master .droplet-pill-fill { background-color: rgba(255,159,107,0.45); }
+.droplet-pill-row { spacing: 10px; padding: 0 14px; }
+.droplet-pill-icon { icon-size: 16px; color: #fff; }
+.droplet-pill-title { font-size: 10pt; font-weight: bold; color: #fff; }
+.droplet-pill-value { font-size: 9pt; color: rgba(255,255,255,0.75); font-feature-settings: "tnum"; }
+.droplet-apps { spacing: 6px; }
+
 /* ---------- полка */
 .droplet-page-shelf { width: 340px; spacing: 10px; }
-.droplet-shelf-grid { max-height: 190px; }
-.droplet-tile { border-radius: 14px; padding: 8px 4px 4px 4px; width: 74px; transition-duration: 150ms; }
+.droplet-shelf-grid { spacing: 6px; }
+.droplet-shelf-row { spacing: 8px; }
+.droplet-tile { border-radius: 14px; padding: 8px 4px 4px 4px; width: 72px; transition-duration: 150ms; }
 .droplet-tile:hover { background-color: rgba(255,255,255,0.1); }
 .droplet-tile-icon { icon-size: 40px; }
-.droplet-tile-name { font-size: 8pt; color: rgba(255,255,255,0.85); margin-top: 4px; max-width: 70px; }
+.droplet-tile-name { font-size: 8pt; color: rgba(255,255,255,0.85); margin-top: 4px; width: 66px; text-align: center; }
 .droplet-tile-actions { spacing: 0; margin-top: 2px; }
 .droplet-mini-button { border-radius: 99px; padding: 3px; color: rgba(255,255,255,0.85); }
 .droplet-mini-button:hover { background-color: rgba(255,255,255,0.16); color: #fff; }
@@ -164,6 +177,10 @@
 .droplet-pomo-dot { width: 10px; height: 10px; border-radius: 5px; background-color: rgba(255,255,255,0.18); }
 .droplet-pomo-dot:checked { background-color: #ff6b54; }
 .droplet-pomo-buttons { spacing: 8px; }
+.droplet-pomo-setup { spacing: 6px; }
+.droplet-pomo-chips { spacing: 5px; }
+.droplet-pomo-chip { padding: 3px 10px; }
+.droplet-pomo-chip:checked { background-color: rgba(255,107,84,0.28); color: #ff6b54; }
 
 /* ---------- система */
 .droplet-page-system { width: 460px; }

@@ -11,6 +11,7 @@ import {vbox} from '../util.js';
 
 const MIME_GNOME = 'x-special/gnome-copied-files';
 const MIME_URIS = 'text/uri-list';
+const PER_ROW = 4;
 
 function parseUris(text, gnome) {
     let lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
@@ -41,11 +42,8 @@ export class ShelfWidget {
         head.add_child(this._clear);
         this.page.add_child(head);
 
-        this._grid = new St.Widget({
-            style_class: 'droplet-shelf-grid',
-            layout_manager: new Clutter.FlowLayout({column_spacing: 6, row_spacing: 6, homogeneous: true, max_column_width: 82}),
-            x_expand: true,
-        });
+        // ровная сетка: по PER_ROW плиток в ряд (автоматический перенос GNOME считает высоту неверно)
+        this._grid = vbox({style_class: 'droplet-shelf-grid', x_expand: true});
         this.page.add_child(this._grid);
         this._empty = new St.Label({text: 'Скопируйте файлы (Ctrl+C)\nили перетащите их на каплю', style_class: 'droplet-dim droplet-shelf-empty'});
         this.page.add_child(this._empty);
@@ -187,8 +185,14 @@ export class ShelfWidget {
     _fill() {
         this._grid.destroy_all_children();
         const files = this._files().filter(u => Gio.File.new_for_uri(u).query_exists(null));
-        for (const uri of files)
-            this._grid.add_child(this._tile(uri));
+        let row = null;
+        files.forEach((uri, i) => {
+            if (i % PER_ROW === 0) {
+                row = new St.BoxLayout({style_class: 'droplet-shelf-row'});
+                this._grid.add_child(row);
+            }
+            row.add_child(this._tile(uri));
+        });
         const has = files.length > 0;
         this._grid.visible = has;
         this._empty.visible = !has;

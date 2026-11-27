@@ -298,6 +298,8 @@ export const Island = GObject.registerClass({
         this._state = state;
         if (prev === 'compact')
             this._setPeek(false);
+        if (state === 'compact' && this.hover)
+            this._addTimeout('peek', PEEK_DELAY, () => this._state === 'compact' && this.hover && this._setPeek(true));
         const layer = n => this[`_${n}`];
         for (const name of LAYERS) {
             if (name === state)
@@ -358,6 +360,8 @@ export const Island = GObject.registerClass({
 
     _setPeek(on) {
         const text = on ? this.peekProvider?.() : null;
+        if (GLib.getenv('DROPLET_DEBUG'))
+            log(`droplet: peek on=${on} text=${text} state=${this._state}`);
         const next = text ? this._marquee : this._clockLabel;
         if (this._center.child === next) {
             if (text)
@@ -374,6 +378,8 @@ export const Island = GObject.registerClass({
         if (text)
             this._addTimeout('marquee', 700, () => this._scrollMarquee());
         this._kick();
+        // размер нового содержимого известен только после раскладки — пересчитаем ещё раз
+        this._addTimeout('peek-relayout', 60, () => this._kick());
     }
 
     /** Бегущая строка: если текст длиннее окна — медленно уезжает влево и возвращается. */
