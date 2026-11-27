@@ -64,6 +64,25 @@ export default class DropletPreferences extends ExtensionPreferences {
         };
         fill();
 
+        // ---------------------------------------------------------------- вид
+        const look = new Adw.PreferencesGroup({title: 'Вид'});
+        page.add(look);
+        const shape = new Adw.ComboRow({
+            title: 'Форма капли',
+            subtitle: 'Остров парит под краем экрана, как Dynamic Island; вырез прилегает к краю, как на MacBook',
+            model: Gtk.StringList.new(['Остров', 'Вырез']),
+        });
+        const ids = ['island', 'notch'];
+        shape.selected = Math.max(0, ids.indexOf(settings.get_string('shape')));
+        shape.connect('notify::selected', () => settings.set_string('shape', ids[shape.selected]));
+        look.add(shape);
+        const transp = new Adw.SwitchRow({
+            title: 'Прозрачная верхняя панель',
+            subtitle: 'Становится непрозрачной, когда окно касается панели',
+        });
+        settings.bind('transparent-panel', transp, 'active', 0);
+        look.add(transp);
+
         // ---------------------------------------------------------------- поведение
         const behavior = new Adw.PreferencesGroup({title: 'Поведение'});
         page.add(behavior);

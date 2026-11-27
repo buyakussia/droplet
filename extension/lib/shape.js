@@ -18,25 +18,26 @@ const lerp = (a, b, t) => a + (b - a) * t;
  *   color — [r, g, b, a]
  */
 export function drawDroplet(cr, p) {
-    const {width, height, fillet, panel, morph, radius, wobble, tabs, color} = p;
+    const {width, height, fillet, panel, morph, radius, wobble, tabs, color, floating} = p;
     const x0 = fillet, x1 = width - fillet;
     const w = x1 - x0;
     if (w <= 1 || height <= 1)
         return;
     const m = Math.max(0, Math.min(1, morph));
 
-    // пилюля держится с небольшим отступом внутри панели; капля прилегает к верхнему краю
-    const inset = lerp(3, 0, m);
+    // «вырез»: пилюля в панели превращается в каплю, прилегающую к верхнему краю;
+    // «остров»: капля всегда парит с отступом и скруглена со всех сторон, как Dynamic Island
+    const inset = floating ? 3 : lerp(3, 0, m);
     const top = inset;
-    const bottom = height - lerp(inset, 0, m);
+    const bottom = height - (floating ? 0 : lerp(inset, 0, m));
     const h = bottom - top;
     const pill = Math.min(h, w) / 2;
-    const rTop = Math.min(lerp(pill, 0, m), w / 2);
+    const rTop = Math.min(floating ? lerp(pill, radius, m) : lerp(pill, 0, m), h / 2, w / 2);
     const rBottom = Math.min(lerp(pill, radius, m), h / 2, w / 2);
 
-    // вогнутые скругления там, где капля отрывается от нижнего края панели
+    // вогнутые скругления там, где капля отрывается от нижнего края панели (только «вырез»)
     const below = bottom - panel;
-    const f = Math.max(0, Math.min(fillet, below - rBottom, fillet * m));
+    const f = floating ? 0 : Math.max(0, Math.min(fillet, below - rBottom, fillet * m));
 
     cr.newPath();
     cr.moveTo(x0 + rTop, top);

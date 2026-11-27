@@ -8,6 +8,7 @@ import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 import {Island} from './lib/island.js';
+import {PanelStyle} from './lib/panel.js';
 import {Registry} from './lib/registry.js';
 import {dropSession} from './lib/art.js';
 
@@ -41,6 +42,7 @@ export default class DropletExtension extends Extension {
         this._island = new Island(this._settings);
         addTopChrome(this._island);
         this._registry = new Registry(this._island, this._settings, this);
+        this._panelStyle = new PanelStyle(this._settings);
         this._island.start();
 
         // только для автоматических тестов: режим экрана блокировки
@@ -71,6 +73,8 @@ export default class DropletExtension extends Extension {
     disable() {
         this._dateMenu?.container.set_opacity(255);
         this._dateMenu = null;
+        this._panelStyle?.destroy();
+        this._panelStyle = null;
         this._registry?.destroy();
         this._registry = null;
         // destroy() сам убирает каплю из слоёв GNOME (и останавливает анимацию до этого)

@@ -192,3 +192,10 @@
 .droplet-stat-bar { height: 4px; border-radius: 2px; background-color: rgba(255,255,255,0.12); }
 .droplet-stat-fill { height: 4px; border-radius: 2px; }
 .droplet-stat-sub { font-size: 8pt; color: rgba(255,255,255,0.45); }
+
+/* ---------- прозрачная верхняя панель */
+#panel.droplet-transparent { background-color: transparent; }
+#panel.droplet-transparent .panel-button {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+  icon-shadow: 0 1px 3px rgba(0,0,0,0.55);
+}

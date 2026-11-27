@@ -5,6 +5,15 @@
       <default>['media', 'calendar', 'audio', 'shelf', 'clipboard', 'notes', 'pomodoro', 'system']</default>
       <summary>Включённые виджеты в порядке показа</summary>
     </key>
+    <key name="transparent-panel" type="b">
+      <default>true</default>
+      <summary>Прозрачная верхняя панель (непрозрачная, когда окно касается её)</summary>
+    </key>
+    <key name="shape" type="s">
+      <choices><choice value="island"/><choice value="notch"/></choices>
+      <default>'island'</default>
+      <summary>Форма капли: island — парит, как Dynamic Island; notch — прилегает к краю, как вырез</summary>
+    </key>
     <key name="active-tab" type="s">
       <default>'media'</default>
       <summary>Последняя открытая вкладка</summary>

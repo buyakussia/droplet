@@ -114,6 +114,7 @@ export const Island = GObject.registerClass({
         this.connect('key-press-event', (_a, e) => this._onKey(e));
         this.connect('destroy', () => this._onDestroy());
         Main.layoutManager.connectObject('monitors-changed', () => this._kick(true), this);
+        settings.connectObject('changed::shape', () => this._kick(), this);
     }
 
     /** Вызывается после добавления на сцену. */
@@ -423,7 +424,8 @@ export const Island = GObject.registerClass({
         const fit = actor => this._natural(actor);
         switch (this._state) {
         case 'expanded': {
-            const [w, h] = fit(this._expanded);
+            const [w, h0] = fit(this._expanded);
+            const h = h0 + (this._floating() ? 4 : 0);
             const [tw] = this._tabsActor ? fit(this._tabsActor) : [0];
             return [Math.min(Math.max(w, tw + 40, 360), maxW), Math.max(h, this._panel + 60)];
         }
@@ -476,6 +478,11 @@ export const Island = GObject.registerClass({
         return ![this._w, this._h, this._m, this._t].every(s => s.settled);
     }
 
+    /** Форма «остров» (парит) или «вырез» (прилегает к краю экрана). */
+    _floating() {
+        return this._settings.get_string('shape') === 'island';
+    }
+
     _tabsGeometry(W, H) {
         if (!this._tabsActor)
             return null;
@@ -517,7 +524,7 @@ export const Island = GObject.registerClass({
         place(this._activity, lh => Math.max(0, (H - lh) / 2));
         place(this._hud, lh => (this._panel - lh) / 2);
         place(this._drop, () => this._panel + 4);
-        place(this._expanded, () => 0);
+        place(this._expanded, () => (this._floating() ? 4 : 0));
         this._content.set_position(0, 0);
         this._content.set_size(totalW, totalH);
         this._content.set_clip(FILLET, 0, W, H);
@@ -545,6 +552,7 @@ export const Island = GObject.registerClass({
             radius: EXPANDED_RADIUS,
             wobble,
             tabs: this._tabsGeo,
+            floating: this._floating(),
             color: [0, 0, 0, 1],
         });
         cr.$dispose();
@@ -706,6 +714,7 @@ export const Island = GObject.registerClass({
         this._timeouts.clear();
         this.releaseKeyboard();
         this._watchOutsideClicks(false);
+        this._settings.disconnectObject(this);
         this._animator?.destroy();
         this._animator = null;
         this._clock = null;
