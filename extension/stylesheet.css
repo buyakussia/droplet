@@ -1,0 +1,81 @@
+/* Droplet: всё содержимое — светлое на чёрной капле */
+#droplet { color: #fff; }
+
+.droplet-compact { spacing: 8px; padding: 0 2px; }
+.droplet-clock { font-weight: bold; font-size: 10.5pt; color: #fff; font-feature-settings: "tnum"; }
+.droplet-mini-art { width: 20px; height: 20px; border-radius: 6px; background-color: #2c2c2e; }
+
+.droplet-eq { spacing: 2px; height: 16px; }
+.droplet-eq-bar { width: 3px; height: 15px; border-radius: 2px; background-color: #ff9f6b; }
+
+/* короткие события */
+.droplet-activity { spacing: 12px; padding: 7px 18px 9px 10px; min-width: 200px; max-width: 520px; }
+.droplet-activity-icon { icon-size: 26px; color: #fff; }
+.droplet-activity-art { width: 34px; height: 34px; border-radius: 8px; background-color: #2c2c2e; }
+.droplet-activity-title { font-weight: bold; font-size: 10.5pt; color: #fff; }
+.droplet-activity-subtitle { font-size: 9.5pt; color: rgba(255,255,255,0.62); }
+
+.droplet-progress { height: 4px; border-radius: 2px; background-color: rgba(255,255,255,0.16); margin-top: 6px; }
+.droplet-progress-fill { height: 4px; border-radius: 2px; background-color: #fff; }
+
+/* раскрытая капля */
+.droplet-layout { spacing: 12px; padding: 0 18px 18px 18px; }
+.droplet-head { spacing: 4px; padding-top: 4px; min-height: 26px; }
+.droplet-date { font-weight: bold; font-size: 10pt; color: rgba(255,255,255,0.75); }
+.droplet-head-button { border-radius: 99px; padding: 5px; color: rgba(255,255,255,0.75); transition-duration: 150ms; }
+.droplet-head-button:hover { background-color: rgba(255,255,255,0.12); color: #fff; }
+.droplet-head-button StIcon { icon-size: 15px; }
+
+.droplet-cards { spacing: 10px; }
+.droplet-card { background-color: rgba(255,255,255,0.075); border-radius: 22px; padding: 14px; spacing: 10px; }
+.droplet-card-head { spacing: 8px; }
+.droplet-card-icon { icon-size: 16px; color: rgba(255,255,255,0.8); }
+.droplet-card-title { font-weight: bold; font-size: 10pt; color: #fff; }
+.droplet-card-value { font-size: 9.5pt; color: rgba(255,255,255,0.6); font-feature-settings: "tnum"; }
+.droplet-dim { color: rgba(255,255,255,0.5); font-size: 9.5pt; }
+
+/* музыка */
+.droplet-media { spacing: 14px; width: 360px; }
+.droplet-art { width: 88px; height: 88px; border-radius: 14px; background-color: #2c2c2e; }
+.droplet-media.idle .droplet-art { background-color: rgba(255,255,255,0.08); }
+.droplet-media-col { spacing: 2px; }
+.droplet-media-title { font-weight: bold; font-size: 11pt; color: #fff; }
+.droplet-media-artist { font-size: 9.5pt; color: rgba(255,255,255,0.62); }
+.droplet-media-progress { spacing: 8px; margin-top: 6px; }
+.droplet-media-progress .droplet-progress { margin-top: 0; }
+.droplet-time { font-size: 8.5pt; color: rgba(255,255,255,0.5); font-feature-settings: "tnum"; min-width: 30px; }
+.droplet-media-controls { spacing: 14px; margin-top: 4px; }
+.droplet-round-button { border-radius: 99px; padding: 6px; color: #fff; transition-duration: 150ms; }
+.droplet-round-button StIcon { icon-size: 18px; }
+.droplet-round-button.big StIcon { icon-size: 24px; }
+.droplet-round-button:hover { background-color: rgba(255,255,255,0.12); }
+.droplet-round-button:active { background-color: rgba(255,255,255,0.2); }
+
+/* звук */
+.droplet-audio { width: 250px; }
+.droplet-slider { -barlevel-height: 6px; -barlevel-background-color: rgba(255,255,255,0.16);
+  -barlevel-active-background-color: #fff; -slider-handle-radius: 8px; color: #fff; height: 22px; }
+.droplet-devices-scroll { max-height: 96px; }
+.droplet-devices { spacing: 2px; }
+.droplet-device { border-radius: 12px; padding: 6px 8px; color: rgba(255,255,255,0.85); transition-duration: 150ms; }
+.droplet-device:hover { background-color: rgba(255,255,255,0.1); }
+.droplet-device.active { background-color: rgba(255,255,255,0.14); color: #fff; }
+.droplet-device StBoxLayout { spacing: 8px; }
+.droplet-device-icon { icon-size: 16px; }
+.droplet-device-check { icon-size: 14px; color: #ff9f6b; }
+
+/* полка */
+.droplet-shelf { width: 300px; }
+.droplet-chip { border-radius: 99px; padding: 3px 10px; font-size: 8.5pt; color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.1); transition-duration: 150ms; }
+.droplet-chip:hover { background-color: rgba(255,255,255,0.18); color: #fff; }
+.droplet-shelf-grid { max-height: 190px; }
+.droplet-tile { border-radius: 14px; padding: 8px 4px 4px 4px; width: 74px; transition-duration: 150ms; }
+.droplet-tile:hover { background-color: rgba(255,255,255,0.1); }
+.droplet-tile-icon { icon-size: 40px; }
+.droplet-tile-name { font-size: 8pt; color: rgba(255,255,255,0.85); margin-top: 4px; max-width: 70px; }
+.droplet-tile-actions { spacing: 0; margin-top: 2px; }
+.droplet-mini-button { border-radius: 99px; padding: 3px; color: rgba(255,255,255,0.85); }
+.droplet-mini-button:hover { background-color: rgba(255,255,255,0.16); color: #fff; }
+.droplet-mini-button StIcon { icon-size: 12px; }
+.droplet-shelf-empty { text-align: center; padding: 18px 0; }

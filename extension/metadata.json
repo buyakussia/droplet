@@ -1,0 +1,10 @@
+{
+  "uuid": "droplet@buyakussia.github.io",
+  "name": "Droplet",
+  "description": "A fluid, Dynamic-Island-style droplet in place of the clock: media controls, audio output switcher, a shelf for copied files, and live notifications — with spring-physics animations.",
+  "shell-version": ["46", "47", "48", "49", "50", "51"],
+  "settings-schema": "org.gnome.shell.extensions.droplet",
+  "gettext-domain": "droplet",
+  "url": "https://github.com/buyakussia/droplet",
+  "version-name": "0.1"
+}

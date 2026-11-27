@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.droplet" path="/org/gnome/shell/extensions/droplet/">
+    <key name="widgets" type="as">
+      <default>['media', 'audio', 'shelf']</default>
+      <summary>Включённые виджеты в порядке показа</summary>
+    </key>
+    <key name="expand-on-hover" type="b">
+      <default>false</default>
+      <summary>Раскрывать каплю при наведении курсора</summary>
+    </key>
+    <key name="show-notifications" type="b">
+      <default>true</default>
+      <summary>Показывать уведомления в капле</summary>
+    </key>
+    <key name="replace-banners" type="b">
+      <default>true</default>
+      <summary>Не показывать стандартный баннер GNOME для уведомлений, показанных в капле</summary>
+    </key>
+    <key name="show-battery" type="b">
+      <default>true</default>
+      <summary>Показывать события батареи</summary>
+    </key>
+    <key name="media-activity" type="b">
+      <default>true</default>
+      <summary>Коротко показывать новый трек</summary>
+    </key>
+    <key name="shelf-files" type="as">
+      <default>[]</default>
+      <summary>Файлы на полке (URI)</summary>
+    </key>
+    <key name="shelf-limit" type="i">
+      <range min="1" max="50"/>
+      <default>12</default>
+      <summary>Сколько файлов держать на полке</summary>
+    </key>
+  </schema>
+</schemalist>
