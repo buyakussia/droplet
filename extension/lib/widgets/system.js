@@ -103,9 +103,9 @@ export class SystemWidget {
         });
         const layout = grid.layout_manager;
         this._tiles = {
-            cpu: new Tile('computer-symbolic', 'Процессор', '#ff9f6b'),
+            cpu: new Tile('computer-symbolic', 'ЦП', '#ff9f6b'),
             ram: new Tile('drive-multidisk-symbolic', 'Память', '#64d2ff'),
-            gpu: new Tile('video-display-symbolic', 'Видеокарта', '#bf5af2'),
+            gpu: new Tile('video-display-symbolic', 'ГП', '#bf5af2'),
             disk: new Tile('drive-harddisk-symbolic', 'Диск', '#ffd60a'),
             battery: new Tile('battery-good-symbolic', 'Батарея', '#30d158'),
             net: new Tile('network-wireless-symbolic', 'Сеть', '#0a84ff'),

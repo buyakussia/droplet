@@ -1,3 +1,5 @@
+import Cairo from 'cairo';
+
 // Форма капли. Рисуется вручную (cairo), чтобы плавно перетекать между
 // «пилюлей в панели» и «каплей, стекающей из панели».
 // Под раскрытой каплей живёт вторая капелька — панель вкладок; пока они близко,
@@ -69,7 +71,11 @@ export function drawDroplet(cr, p) {
         cr.arc(x0 + rTop, top + rTop, rTop, Math.PI, Math.PI * 1.5);
     cr.closePath();
 
+    // тело капли: в раскрытом виде низ мягко растворяется, как у Droppy
+    fillBody(cr, color, top, bottom, m);
+
     if (tabs && tabs.w > 2 && tabs.h > 2) {
+        cr.newPath();
         const r = tabs.h / 2;
         // капелька вкладок
         cr.moveTo(tabs.x + r, tabs.y);
@@ -97,9 +103,26 @@ export function drawDroplet(cr, p) {
             cr.curveTo(cx + neck * 0.55, mid, cx + neck * 0.9, yTop, cx + spread, yTop);
             cr.closePath();
         }
-    }
 
-    cr.setSourceRGBA(...color);
-    cr.setFillRule(0); // WINDING: части сливаются в одну фигуру
+        // капелька вкладок — тёмно-серая полупрозрачная, как в Droppy
+        cr.setSourceRGBA(0.16, 0.16, 0.17, 0.92);
+        cr.setFillRule(0); // WINDING: части сливаются в одну фигуру
+        cr.fill();
+    }
+}
+
+function fillBody(cr, color, top, bottom, m) {
+    const [r, g, b, a] = color;
+    const fade = 30 * Math.max(0, Math.min(1, m));
+    if (fade < 1) {
+        cr.setSourceRGBA(r, g, b, a);
+    } else {
+        const pat = new Cairo.LinearGradient(0, top, 0, bottom);
+        pat.addColorStopRGBA(0, r, g, b, a);
+        pat.addColorStopRGBA(Math.max(0, (bottom - top - fade) / (bottom - top)), r, g, b, a);
+        pat.addColorStopRGBA(1, r + 0.07, g + 0.07, b + 0.07, a * 0.86);
+        cr.setSource(pat);
+    }
+    cr.setFillRule(0);
     cr.fill();
 }

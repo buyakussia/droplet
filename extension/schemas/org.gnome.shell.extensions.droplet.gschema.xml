@@ -7,7 +7,11 @@
     </key>
     <key name="transparent-panel" type="b">
       <default>true</default>
-      <summary>Прозрачная верхняя панель (непрозрачная, когда окно касается её)</summary>
+      <summary>Прозрачная верхняя панель</summary>
+    </key>
+    <key name="panel-solid-with-windows" type="b">
+      <default>false</default>
+      <summary>Делать панель непрозрачной, когда окно касается её</summary>
     </key>
     <key name="shape" type="s">
       <choices><choice value="island"/><choice value="notch"/></choices>

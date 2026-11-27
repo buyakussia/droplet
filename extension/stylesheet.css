@@ -7,12 +7,12 @@
 .droplet-mini-art { width: 20px; height: 20px; border-radius: 6px; background-color: #2c2c2e; }
 .droplet-marquee { width: 190px; height: 20px; }
 .droplet-marquee-text { font-weight: bold; font-size: 10pt; color: #fff; }
-.droplet-pomo-compact { font-weight: bold; font-size: 10.5pt; color: #ff6b54; font-feature-settings: "tnum"; }
+.droplet-pomo-compact { font-weight: bold; font-size: 10.5pt; color: #ff9f0a; font-feature-settings: "tnum"; }
 
 .droplet-eq { spacing: 2px; height: 16px; }
 .droplet-eq-bar { width: 3px; height: 15px; border-radius: 2px; background-color: #ff9f6b; }
-.droplet-eq-page { height: 22px; spacing: 3px; }
-.droplet-eq-page .droplet-eq-bar { height: 20px; }
+.droplet-eq-page { height: 16px; spacing: 2px; }
+.droplet-eq-page .droplet-eq-bar { height: 15px; }
 
 /* ---------- короткие события и полоска громкости */
 .droplet-activity { spacing: 12px; padding: 7px 18px 9px 10px; min-width: 200px; max-width: 520px; }
@@ -35,25 +35,25 @@
 .droplet-drop-label { font-weight: bold; font-size: 10.5pt; color: #fff; }
 
 /* ---------- раскрытая капля */
-.droplet-layout { spacing: 10px; padding: 0 18px 18px 18px; }
-.droplet-head { spacing: 4px; padding-top: 4px; min-height: 26px; }
-.droplet-date { font-weight: bold; font-size: 10pt; color: rgba(255,255,255,0.75); }
+.droplet-layout { spacing: 8px; padding: 0 16px 14px 16px; }
+.droplet-head { spacing: 4px; padding-top: 3px; min-height: 24px; }
+.droplet-date { font-weight: bold; font-size: 9pt; color: rgba(255,255,255,0.6); }
 .droplet-head-button { border-radius: 99px; padding: 5px; color: rgba(255,255,255,0.75); transition-duration: 150ms; }
 .droplet-head-button:hover { background-color: rgba(255,255,255,0.12); color: #fff; }
 .droplet-head-button StIcon { icon-size: 15px; }
 
 /* капелька вкладок (её фон рисуется вместе с каплей) */
 .droplet-tabs { padding: 0; }
-.droplet-tab-box { spacing: 2px; padding: 4px; }
+.droplet-tab-box { spacing: 1px; padding: 3px; }
 .droplet-tab-indicator { border-radius: 99px; background-color: rgba(255,255,255,0.16); }
-.droplet-tab { border-radius: 99px; padding: 6px 9px; color: rgba(255,255,255,0.6); transition-duration: 180ms; }
+.droplet-tab { border-radius: 99px; padding: 5px 8px; color: rgba(255,255,255,0.55); transition-duration: 180ms; }
 .droplet-tab:hover { color: #fff; }
 .droplet-tab:checked { color: #fff; }
-.droplet-tab StIcon { icon-size: 15px; }
+.droplet-tab StIcon { icon-size: 13px; }
 
 .droplet-card-head { spacing: 8px; }
 .droplet-card-icon { icon-size: 16px; color: rgba(255,255,255,0.8); }
-.droplet-card-title { font-weight: bold; font-size: 10pt; color: #fff; }
+.droplet-card-title { font-weight: bold; font-size: 9.5pt; color: #fff; }
 .droplet-card-value { font-size: 9.5pt; color: rgba(255,255,255,0.6); font-feature-settings: "tnum"; }
 .droplet-dim { color: rgba(255,255,255,0.5); font-size: 9.5pt; }
 .droplet-center { text-align: center; }
@@ -63,10 +63,10 @@
   background-color: rgba(255,255,255,0.1); transition-duration: 150ms; }
 .droplet-chip:hover { background-color: rgba(255,255,255,0.18); color: #fff; }
 
-.droplet-round-button { border-radius: 99px; padding: 7px; color: #fff; transition-duration: 150ms; }
-.droplet-round-button StIcon { icon-size: 18px; }
-.droplet-round-button.big StIcon { icon-size: 24px; }
-.droplet-round-button.small StIcon { icon-size: 15px; }
+.droplet-round-button { border-radius: 99px; padding: 6px; color: #fff; transition-duration: 150ms; }
+.droplet-round-button StIcon { icon-size: 16px; }
+.droplet-round-button.big StIcon { icon-size: 21px; }
+.droplet-round-button.small StIcon { icon-size: 13px; }
 .droplet-round-button.small { color: rgba(255,255,255,0.6); }
 .droplet-round-button.small:checked { color: #ff9f6b; }
 .droplet-round-button:hover { background-color: rgba(255,255,255,0.12); color: #fff; }
@@ -75,23 +75,23 @@
 .droplet-round-button.accent:hover { background-color: rgba(255,107,84,0.32); }
 
 /* ---------- музыка (как в Alcove) */
-.droplet-page-media { width: 380px; spacing: 10px; }
-.droplet-media-top { spacing: 12px; }
-.droplet-art { width: 54px; height: 54px; border-radius: 12px; background-color: #2c2c2e; }
+.droplet-page-media { width: 300px; spacing: 8px; }
+.droplet-media-top { spacing: 10px; }
+.droplet-art { width: 42px; height: 42px; border-radius: 9px; background-color: #2c2c2e; }
 .droplet-page-media.idle .droplet-art { background-color: rgba(255,255,255,0.08); }
-.droplet-media-title { font-weight: bold; font-size: 11pt; color: #fff; }
-.droplet-media-artist { font-size: 9.5pt; color: rgba(255,255,255,0.62); }
+.droplet-media-title { font-weight: bold; font-size: 10pt; color: #fff; }
+.droplet-media-artist { font-size: 8.5pt; color: rgba(255,255,255,0.55); }
 .droplet-media-progress { spacing: 10px; }
 .droplet-media-progress .droplet-progress { margin-top: 0; }
 .droplet-seek:hover { height: 6px; }
-.droplet-time { font-size: 8.5pt; color: rgba(255,255,255,0.5); font-feature-settings: "tnum"; min-width: 34px; }
+.droplet-time { font-size: 7.5pt; color: rgba(255,255,255,0.45); font-feature-settings: "tnum"; min-width: 30px; }
 .droplet-time-right { text-align: right; }
-.droplet-media-controls { spacing: 16px; }
+.droplet-media-controls { spacing: 10px; }
 .droplet-media-outputs { margin-top: 2px; }
 
 /* ---------- звук */
-.droplet-page-audio { width: 340px; }
-.droplet-audio-scroll { max-height: 330px; }
+.droplet-page-audio { width: 300px; }
+.droplet-audio-scroll { max-height: 300px; }
 .droplet-audio-col { spacing: 6px; padding-right: 12px; } /* место под полосу прокрутки */
 .droplet-mixer-row { spacing: 2px; }
 .droplet-mixer-row.app { padding: 2px 4px; }
@@ -101,7 +101,7 @@
 .droplet-slider { -barlevel-height: 6px; -barlevel-background-color: rgba(255,255,255,0.16);
   -barlevel-active-background-color: #fff; -slider-handle-radius: 8px; color: #fff; height: 22px; }
 .droplet-devices { spacing: 2px; }
-.droplet-device { border-radius: 12px; padding: 6px 8px; color: rgba(255,255,255,0.85); transition-duration: 150ms; }
+.droplet-device { border-radius: 10px; padding: 5px 8px; font-size: 9.5pt; color: rgba(255,255,255,0.85); transition-duration: 150ms; }
 .droplet-device:hover { background-color: rgba(255,255,255,0.1); }
 .droplet-device.active { background-color: rgba(255,255,255,0.14); color: #fff; }
 .droplet-device StBoxLayout { spacing: 8px; }
@@ -109,25 +109,25 @@
 .droplet-device-check { icon-size: 14px; color: #ff9f6b; }
 
 /* ползунок-пилюля (как в Droppy) */
-.droplet-pill { border-radius: 14px; background-color: rgba(255,255,255,0.08); min-height: 36px; transition-duration: 150ms; }
+.droplet-pill { border-radius: 12px; background-color: rgba(255,255,255,0.08); min-height: 32px; transition-duration: 150ms; }
 .droplet-pill:hover { background-color: rgba(255,255,255,0.11); }
-.droplet-pill-fill { border-radius: 14px; background-color: rgba(255,255,255,0.2); }
+.droplet-pill-fill { border-radius: 12px; background-color: rgba(255,255,255,0.2); }
 .droplet-pill:active .droplet-pill-fill { background-color: rgba(255,255,255,0.26); }
 .droplet-pill.master .droplet-pill-fill { background-color: rgba(255,159,107,0.45); }
 .droplet-pill-row { spacing: 10px; padding: 0 14px; }
 .droplet-pill-icon { icon-size: 16px; color: #fff; }
-.droplet-pill-title { font-size: 10pt; font-weight: bold; color: #fff; }
-.droplet-pill-value { font-size: 9pt; color: rgba(255,255,255,0.75); font-feature-settings: "tnum"; }
+.droplet-pill-title { font-size: 9pt; font-weight: bold; color: #fff; }
+.droplet-pill-value { font-size: 8.5pt; color: rgba(255,255,255,0.7); font-feature-settings: "tnum"; }
 .droplet-apps { spacing: 6px; }
 
 /* ---------- полка */
-.droplet-page-shelf { width: 340px; spacing: 10px; }
+.droplet-page-shelf { width: 304px; spacing: 8px; }
 .droplet-shelf-grid { spacing: 6px; }
 .droplet-shelf-row { spacing: 8px; }
-.droplet-tile { border-radius: 14px; padding: 8px 4px 4px 4px; width: 72px; transition-duration: 150ms; }
+.droplet-tile { border-radius: 12px; padding: 6px 3px 3px 3px; width: 68px; transition-duration: 150ms; }
 .droplet-tile:hover { background-color: rgba(255,255,255,0.1); }
-.droplet-tile-icon { icon-size: 40px; }
-.droplet-tile-name { font-size: 8pt; color: rgba(255,255,255,0.85); margin-top: 4px; width: 66px; text-align: center; }
+.droplet-tile-icon { icon-size: 34px; }
+.droplet-tile-name { font-size: 7.5pt; color: rgba(255,255,255,0.8); margin-top: 3px; width: 62px; text-align: center; }
 .droplet-tile-actions { spacing: 0; margin-top: 2px; }
 .droplet-mini-button { border-radius: 99px; padding: 3px; color: rgba(255,255,255,0.85); }
 .droplet-mini-button:hover { background-color: rgba(255,255,255,0.16); color: #fff; }
@@ -135,10 +135,10 @@
 .droplet-shelf-empty { text-align: center; padding: 18px 0; }
 
 /* ---------- календарь и погода */
-.droplet-page-calendar { width: 380px; spacing: 18px; }
-.droplet-cal-day { min-width: 92px; }
+.droplet-page-calendar { width: 300px; spacing: 14px; }
+.droplet-cal-day { min-width: 76px; }
 .droplet-cal-weekday { font-size: 9.5pt; font-weight: bold; color: #ff453a; }
-.droplet-cal-num { font-size: 34pt; font-weight: 300; color: #fff; }
+.droplet-cal-num { font-size: 28pt; font-weight: 300; color: #fff; }
 .droplet-cal-month { font-size: 9.5pt; color: rgba(255,255,255,0.6); }
 .droplet-cal-right { spacing: 10px; }
 .droplet-cal-events { spacing: 8px; }
@@ -152,45 +152,51 @@
 .droplet-weather-place { font-size: 9pt; color: rgba(255,255,255,0.6); }
 
 /* ---------- буфер обмена */
-.droplet-page-clipboard { width: 340px; spacing: 8px; }
+.droplet-page-clipboard { width: 300px; spacing: 6px; }
 .droplet-clip-list { spacing: 2px; }
-.droplet-clip-row { border-radius: 12px; padding: 7px 10px; background-color: rgba(255,255,255,0.05); transition-duration: 150ms; }
+.droplet-clip-row { border-radius: 10px; padding: 6px 10px; background-color: rgba(255,255,255,0.05); transition-duration: 150ms; }
 .droplet-clip-row:hover { background-color: rgba(255,255,255,0.12); }
 .droplet-clip-row StBoxLayout { spacing: 10px; }
-.droplet-clip-text { font-size: 9.5pt; color: rgba(255,255,255,0.9); }
+.droplet-clip-text { font-size: 9pt; color: rgba(255,255,255,0.88); }
 .droplet-clip-thumb { width: 44px; height: 28px; border-radius: 6px; }
 .droplet-clip-pin { icon-size: 12px; color: #ff9f6b; }
 
 /* ---------- заметки */
-.droplet-page-notes { width: 340px; spacing: 8px; }
-.droplet-notes-sheet { min-height: 120px; border-radius: 14px; padding: 10px 12px; background-color: rgba(255,255,255,0.07); }
+.droplet-page-notes { width: 300px; spacing: 6px; }
+.droplet-notes-sheet { min-height: 96px; border-radius: 14px; padding: 10px 12px; background-color: rgba(255,255,255,0.07); }
 .droplet-notes-sheet:hover { background-color: rgba(255,255,255,0.09); }
 .droplet-notes-entry { padding: 0; background-color: transparent; color: #fff; border: none; box-shadow: none;
   caret-color: #ff9f6b; selection-background-color: rgba(255,159,107,0.5); min-height: 0; }
 .droplet-notes-entry:focus { background-color: transparent; border: none; box-shadow: none; }
 
-/* ---------- Pomodoro */
-.droplet-page-pomodoro { spacing: 22px; padding: 4px 6px; }
-.droplet-pomo-ringbox { width: 132px; height: 132px; }
-.droplet-pomo-time { font-size: 24pt; font-weight: bold; color: #fff; font-feature-settings: "tnum"; }
-.droplet-pomo-phase { font-size: 9pt; color: rgba(255,255,255,0.6); }
-.droplet-pomo-side { spacing: 14px; }
-.droplet-pomo-dots { spacing: 6px; }
-.droplet-pomo-dot { width: 10px; height: 10px; border-radius: 5px; background-color: rgba(255,255,255,0.18); }
-.droplet-pomo-dot:checked { background-color: #ff6b54; }
-.droplet-pomo-buttons { spacing: 8px; }
-.droplet-pomo-setup { spacing: 6px; }
-.droplet-pomo-chips { spacing: 5px; }
-.droplet-pomo-chip { padding: 3px 10px; }
-.droplet-pomo-chip:checked { background-color: rgba(255,107,84,0.28); color: #ff6b54; }
+/* ---------- Pomodoro (как в Droppy) */
+.droplet-page-pomodoro { width: 300px; }
+.droplet-pomo-setup { spacing: 8px; }
+.droplet-pomo-chips { spacing: 6px; }
+.droplet-pomo-chip { border-radius: 99px; padding: 3px 12px; font-size: 8.5pt; font-weight: bold; color: rgba(255,255,255,0.65);
+  background-color: rgba(255,255,255,0.08); transition-duration: 150ms; }
+.droplet-pomo-chip:checked { background-color: rgba(255,159,10,0.22); color: #ff9f0a; }
+.droplet-ruler { height: 40px; }
+.droplet-pomo-bottom { spacing: 8px; }
+.droplet-pomo-start { border-radius: 99px; padding: 6px 16px; font-weight: bold; font-size: 9.5pt; color: #ff9f0a;
+  background-color: rgba(255,159,10,0.2); transition-duration: 150ms; }
+.droplet-pomo-start:hover { background-color: rgba(255,159,10,0.3); }
+.droplet-pomo-icon { border-radius: 99px; padding: 7px; color: rgba(255,255,255,0.75); background-color: rgba(255,255,255,0.08); }
+.droplet-pomo-icon:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
+.droplet-pomo-icon StIcon { icon-size: 14px; }
+.droplet-pomo-pause { border-radius: 99px; padding: 8px; color: #ff9f0a; background-color: rgba(255,159,10,0.22); }
+.droplet-pomo-pause StIcon { icon-size: 15px; }
+.droplet-pomo-run { spacing: 8px; }
+.droplet-pomo-runphase { font-size: 8.5pt; font-weight: bold; color: #ff9f0a; margin-bottom: 6px; margin-right: 4px; }
+.droplet-pomo-big { font-size: 22pt; font-weight: bold; color: #ff9f0a; font-feature-settings: "tnum"; }
 
 /* ---------- система */
-.droplet-page-system { width: 460px; }
-.droplet-stat { background-color: rgba(255,255,255,0.065); border-radius: 16px; padding: 10px 12px; spacing: 6px; }
+.droplet-page-system { width: 384px; }
+.droplet-stat { background-color: rgba(255,255,255,0.065); border-radius: 13px; padding: 8px 10px; spacing: 5px; }
 .droplet-stat-head { spacing: 6px; }
 .droplet-stat-icon { icon-size: 13px; color: rgba(255,255,255,0.6); }
 .droplet-stat-title { font-size: 8.5pt; color: rgba(255,255,255,0.6); }
-.droplet-stat-value { font-size: 10pt; font-weight: bold; color: #fff; font-feature-settings: "tnum"; }
+.droplet-stat-value { font-size: 9pt; font-weight: bold; color: #fff; font-feature-settings: "tnum"; }
 .droplet-stat-bar { height: 4px; border-radius: 2px; background-color: rgba(255,255,255,0.12); }
 .droplet-stat-fill { height: 4px; border-radius: 2px; }
 .droplet-stat-sub { font-size: 8pt; color: rgba(255,255,255,0.45); }

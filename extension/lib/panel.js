@@ -1,5 +1,5 @@
-// Прозрачная верхняя панель GNOME. Как только окно касается панели (развёрнуто или придвинуто
-// вплотную), панель снова становится непрозрачной — чтобы её было удобно читать.
+// Прозрачная верхняя панель GNOME — всегда, в том числе над развёрнутыми окнами.
+// По желанию (настройка) — непрозрачная, когда окно касается панели.
 
 import GLib from 'gi://GLib';
 import Meta from 'gi://Meta';
@@ -12,7 +12,10 @@ export class PanelStyle {
     constructor(settings) {
         this._settings = settings;
         this._idle = 0;
-        settings.connectObject('changed::transparent-panel', () => this._queue(), this);
+        settings.connectObject(
+            'changed::transparent-panel', () => this._queue(),
+            'changed::panel-solid-with-windows', () => this._queue(),
+            this);
         global.display.connectObject('window-created', (_d, w) => this._watchWindow(w), this);
         global.workspace_manager.connectObject('active-workspace-changed', () => this._queue(), this);
         global.window_manager.connectObject('switch-workspace', () => this._queue(), this);
@@ -63,8 +66,10 @@ export class PanelStyle {
     }
 
     _update() {
-        const want = this._settings.get_boolean('transparent-panel') &&
-            !Main.sessionMode.isLocked && !this._touching();
+        // по умолчанию панель прозрачна всегда — и над развёрнутыми окнами;
+        // по желанию — непрозрачна, когда окно касается панели
+        const solid = this._settings.get_boolean('panel-solid-with-windows') && this._touching();
+        const want = this._settings.get_boolean('transparent-panel') && !Main.sessionMode.isLocked && !solid;
         if (want)
             Main.panel.add_style_class_name(CLASS);
         else

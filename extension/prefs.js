@@ -78,10 +78,17 @@ export default class DropletPreferences extends ExtensionPreferences {
         look.add(shape);
         const transp = new Adw.SwitchRow({
             title: 'Прозрачная верхняя панель',
-            subtitle: 'Становится непрозрачной, когда окно касается панели',
+            subtitle: 'В том числе когда приложение развёрнуто на весь экран',
         });
         settings.bind('transparent-panel', transp, 'active', 0);
         look.add(transp);
+        const solid = new Adw.SwitchRow({
+            title: 'Непрозрачная над окнами',
+            subtitle: 'Делать панель чёрной, когда окно касается её края',
+        });
+        settings.bind('panel-solid-with-windows', solid, 'active', 0);
+        settings.bind('transparent-panel', solid, 'sensitive', 0);
+        look.add(solid);
 
         // ---------------------------------------------------------------- поведение
         const behavior = new Adw.PreferencesGroup({title: 'Поведение'});

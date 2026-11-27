@@ -11,6 +11,7 @@
 // Все размеры ведут пружины (spring.js): смена состояния посреди движения не даёт рывков.
 
 import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import GnomeDesktop from 'gi://GnomeDesktop';
 import GObject from 'gi://GObject';
@@ -73,6 +74,8 @@ export const Island = GObject.registerClass({
         this._clock = new GnomeDesktop.WallClock();
         this._clockLabel = new St.Label({style_class: 'droplet-clock', y_align: Clutter.ActorAlign.CENTER});
         this._clock.connectObject('notify::clock', () => this._syncClock(), this);
+        this._iface = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
+        this._iface.connectObject('changed::clock-format', () => this._syncClock(), this);
         this._marquee = new St.Widget({style_class: 'droplet-marquee', clip_to_allocation: true, y_align: Clutter.ActorAlign.CENTER, layout_manager: new Clutter.FixedLayout()});
         this._marqueeLabel = new St.Label({style_class: 'droplet-marquee-text'});
         this._marquee.add_child(this._marqueeLabel);
@@ -130,7 +133,9 @@ export const Island = GObject.registerClass({
     // ------------------------------------------------------------------ содержимое
 
     _syncClock() {
-        this._clockLabel.text = this._clock.clock.trim();
+        // только время, как в Dynamic Island; дата — в раскрытой капле
+        const fmt = this._iface?.get_string('clock-format') === '12h' ? '%l:%M' : '%H:%M';
+        this._clockLabel.text = GLib.DateTime.new_now_local().format(fmt).trim();
         this._kick();
     }
 
@@ -529,6 +534,14 @@ export const Island = GObject.registerClass({
         this._content.set_size(totalW, totalH);
         this._content.set_clip(FILLET, 0, W, H);
 
+        if (tabs && GLib.getenv('DROPLET_DEBUG')) {
+            const y = Math.round(tabs.y + tabs.h / 2), x0 = Math.round(mon.x + (mon.width - totalW) / 2 + FILLET + (W - tabs.tw) / 2);
+            const key = `${x0},${y},${Math.round(tabs.tw)}`;
+            if (key !== this._dbgTabs && this._t.settled && this._h.settled) {
+                this._dbgTabs = key;
+                log(`droplet: tabs x=${x0} y=${y} w=${Math.round(tabs.tw)}`);
+            }
+        }
         if (this._tabsActor) {
             if (tabs) {
                 this._tabsActor.visible = true;
@@ -734,6 +747,8 @@ export const Island = GObject.registerClass({
         this._settings.disconnectObject(this);
         this._animator?.destroy();
         this._animator = null;
+        this._iface?.disconnectObject(this);
+        this._iface = null;
         this._clock = null;
     }
 });
