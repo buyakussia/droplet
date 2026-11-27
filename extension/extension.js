@@ -7,11 +7,35 @@ import {Island} from './lib/island.js';
 import {Registry} from './lib/registry.js';
 import {dropSession} from './lib/art.js';
 
+/**
+ * Добавить каплю поверх окон. В GNOME 46–47 нужно явно попросить, чтобы она принимала щелчки
+ * (affectsInputRegion); в новых версиях этого параметра нет — там это поведение по умолчанию.
+ * GNOME сначала добавляет актёра и только потом проверяет параметры, поэтому при ошибке
+ * убираем его и пробуем снова.
+ */
+function addTopChrome(actor) {
+    const variants = [
+        {affectsInputRegion: true, trackFullscreen: true},
+        {trackFullscreen: true},
+    ];
+    let error = null;
+    for (const params of variants) {
+        try {
+            Main.layoutManager.addTopChrome(actor, params);
+            return;
+        } catch (e) {
+            error = e;
+            actor.get_parent()?.remove_child(actor);
+        }
+    }
+    throw error;
+}
+
 export default class DropletExtension extends Extension {
     enable() {
         this._settings = this.getSettings();
         this._island = new Island(this._settings);
-        Main.layoutManager.addTopChrome(this._island, {affectsInputRegion: true, trackFullscreen: true});
+        addTopChrome(this._island);
         this._registry = new Registry(this._island, this._settings, this);
         this._island.start();
 
