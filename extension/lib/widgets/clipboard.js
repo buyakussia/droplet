@@ -75,7 +75,7 @@ export class ClipboardWidget {
 
     _row(item) {
         const b = new St.Button({style_class: 'droplet-clip-row', can_focus: true, x_expand: true});
-        const box = new St.BoxLayout();
+        const box = new St.BoxLayout({x_expand: true, x_align: Clutter.ActorAlign.FILL});
         if (item.kind === 'image') {
             const thumb = GLib.build_filenamev([DIR, 'blobs', `${item.hash}.thumb.png`]);
             const full = GLib.build_filenamev([DIR, 'blobs', `${item.hash}.png`]);

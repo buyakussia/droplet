@@ -179,6 +179,7 @@ export class Registry {
         }
         this._tabs.setActive(id);
         w.onPageShown?.(true);
+        this._island.noteContentResize();
         this._island.relayout();
     }
 

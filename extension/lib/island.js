@@ -584,6 +584,23 @@ export const Island = GObject.registerClass({
      * Курсор ушёл с раскрытой капли. Сворачиваем, только если он действительно отошёл:
      * при смене вкладки капля меняет размер и может «уехать» из-под курсора — это не уход.
      */
+    /**
+     * Вкладку только что переключили: капля меняет размер и может «уехать» из-под курсора.
+     * Пока курсор стоит на месте, это не уход.
+     */
+    noteContentResize() {
+        this._resizeAt = GLib.get_monotonic_time();
+        this._resizePointer = global.get_pointer().slice(0, 2);
+    }
+
+    _pointerStill() {
+        if (!this._resizePointer)
+            return false;
+        const [px, py] = global.get_pointer();
+        const [rx, ry] = this._resizePointer;
+        return Math.hypot(px - rx, py - ry) < 40;
+    }
+
     _watchLeave() {
         const MARGIN = 70;
         let away = 0;
@@ -593,7 +610,7 @@ export const Island = GObject.registerClass({
             const [px, py] = global.get_pointer();
             const [ax, ay] = this.get_transformed_position();
             const [aw, ah] = this.get_size();
-            const near = px > ax - MARGIN && px < ax + aw + MARGIN && py < ay + ah + MARGIN;
+            const near = (px > ax - MARGIN && px < ax + aw + MARGIN && py < ay + ah + MARGIN) || this._pointerStill();
             away = near ? 0 : away + 120;
             if (away >= COLLAPSE_DELAY && !this._holdOpen && !this._grab)
                 this.collapse();

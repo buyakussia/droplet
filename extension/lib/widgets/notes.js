@@ -34,7 +34,6 @@ export class NotesWidget {
         text.activatable = false;
         text.line_wrap = true;
         text.line_wrap_mode = 2; // WORD_CHAR
-        text.y_align = Clutter.ActorAlign.START; // текст начинается сверху поля, а не по центру
         this._entry.text = ctx.settings.get_string('notes');
         text.connect('text-changed', () => this._scheduleSave());
         // GNOME отдаёт клавиатуру панели только при захвате — берём его по щелчку в поле
@@ -43,7 +42,16 @@ export class NotesWidget {
             return Clutter.EVENT_PROPAGATE;
         });
         text.connect('key-focus-in', () => ctx.island.grabKeyboard(null));
-        this.page.add_child(this._entry);
+        // St.Entry ставит текст по центру своей высоты, поэтому высоту даёт «лист» вокруг,
+        // а поле растёт вместе с текстом и прижато к верху
+        this._sheet = vbox({style_class: 'droplet-notes-sheet', reactive: true});
+        this._entry.y_align = Clutter.ActorAlign.START;
+        this._sheet.add_child(this._entry);
+        this._sheet.connect('button-press-event', () => {
+            ctx.island.grabKeyboard(text);
+            return Clutter.EVENT_STOP;
+        });
+        this.page.add_child(this._sheet);
         this.page.add_child(new St.Label({text: 'Esc — свернуть каплю', style_class: 'droplet-hint'}));
     }
 

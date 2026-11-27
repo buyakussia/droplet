@@ -60,8 +60,17 @@ export function setOutput(device) {
     mixer().change_output(device);
 }
 
+/** Монохромный значок устройства — в стиле капли (цветные значки GNOME выбиваются). */
 export function deviceIcon(d) {
-    return d.get_gicon?.() ?? (d.get_icon_name() || 'audio-speakers-symbolic');
+    const name = (d.get_icon_name?.() || '').replace(/-symbolic$/, '');
+    const text = `${name} ${d.get_description?.() ?? ''} ${d.get_port_name?.() ?? ''}`.toLowerCase();
+    if (/head(phone|set)|наушник|earbud|airpod|bluez|bluetooth/.test(text))
+        return 'audio-headphones-symbolic';
+    if (/hdmi|displayport|video-display|monitor/.test(text))
+        return 'video-display-symbolic';
+    if (/usb/.test(text) && /headset|microphone/.test(text))
+        return 'audio-headset-symbolic';
+    return 'audio-speakers-symbolic';
 }
 
 export function deviceName(d) {

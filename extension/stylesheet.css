@@ -92,7 +92,7 @@
 /* ---------- звук */
 .droplet-page-audio { width: 340px; }
 .droplet-audio-scroll { max-height: 330px; }
-.droplet-audio-col { spacing: 6px; }
+.droplet-audio-col { spacing: 6px; padding-right: 12px; } /* место под полосу прокрутки */
 .droplet-mixer-row { spacing: 2px; }
 .droplet-mixer-row.app { padding: 2px 4px; }
 .droplet-mixer-head { spacing: 8px; }
@@ -163,9 +163,11 @@
 
 /* ---------- заметки */
 .droplet-page-notes { width: 340px; spacing: 8px; }
-.droplet-notes-entry { min-height: 120px; border-radius: 14px; padding: 10px 12px; background-color: rgba(255,255,255,0.07);
-  color: #fff; border: none; box-shadow: none; caret-color: #ff9f6b; selection-background-color: rgba(255,159,107,0.5); }
-.droplet-notes-entry:focus { background-color: rgba(255,255,255,0.1); }
+.droplet-notes-sheet { min-height: 120px; border-radius: 14px; padding: 10px 12px; background-color: rgba(255,255,255,0.07); }
+.droplet-notes-sheet:hover { background-color: rgba(255,255,255,0.09); }
+.droplet-notes-entry { padding: 0; background-color: transparent; color: #fff; border: none; box-shadow: none;
+  caret-color: #ff9f6b; selection-background-color: rgba(255,159,107,0.5); min-height: 0; }
+.droplet-notes-entry:focus { background-color: transparent; border: none; box-shadow: none; }
 
 /* ---------- Pomodoro */
 .droplet-page-pomodoro { spacing: 22px; padding: 4px 6px; }

@@ -180,7 +180,7 @@ export class MediaWidget {
         const active = Sound.activeOutputId();
         for (const d of Sound.outputs()) {
             const row = new St.Button({style_class: 'droplet-device', can_focus: true, x_expand: true});
-            const box = new St.BoxLayout();
+            const box = new St.BoxLayout({x_expand: true, x_align: Clutter.ActorAlign.FILL});
             const icon = Sound.deviceIcon(d);
             box.add_child(typeof icon === 'string'
                 ? new St.Icon({icon_name: icon, style_class: 'droplet-device-icon'})
